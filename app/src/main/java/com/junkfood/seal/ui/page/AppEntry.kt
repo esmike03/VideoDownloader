@@ -119,7 +119,7 @@ fun AppEntry(dialogViewModel: DownloadDialogViewModel) {
             currentRoute = currentRoute,
             currentTopDestination = currentTopDestination,
             showQuickSettings = true,
-            gesturesEnabled = currentRoute == Route.HOME,
+            gesturesEnabled = false,
             onDismissRequest = { drawerState.close() },
             onNavigateToRoute = {
                 if (currentRoute != it) {

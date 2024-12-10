@@ -36,14 +36,11 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.outlined.List
 import androidx.compose.material.icons.outlined.FileDownload
 import androidx.compose.material.icons.outlined.GridView
-import androidx.compose.material.icons.outlined.Menu
-import androidx.compose.material.icons.outlined.MoreVert
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.FilledIconButton
 import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
 import androidx.compose.material3.IconButtonDefaults
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
@@ -349,7 +346,9 @@ fun DownloadPageImplV2(
     }
 
     Scaffold(
-        modifier = modifier.fillMaxSize().statusBarsPadding(),
+        modifier = modifier
+            .fillMaxSize()
+            .statusBarsPadding(),
         containerColor = MaterialTheme.colorScheme.surface,
         floatingActionButton = { FABs(modifier = Modifier, downloadCallback = downloadCallback) },
     ) { windowInsetsPadding ->
@@ -365,20 +364,21 @@ fun DownloadPageImplV2(
 
         Column(
             modifier =
-                Modifier.fillMaxSize()
-                    .then(
-                        if (windowWidthSizeClass != WindowWidthSizeClass.Compact) Modifier
-                        else
-                            Modifier.nestedScroll(
-                                connection =
-                                    TopBarNestedScrollConnection(
-                                        maxOffset = spacerHeight,
-                                        flingAnimationSpec = rememberSplineBasedDecay(),
-                                        offset = { headerOffset },
-                                        onOffsetUpdate = { headerOffset = it },
-                                    )
+            Modifier
+                .fillMaxSize()
+                .then(
+                    if (windowWidthSizeClass != WindowWidthSizeClass.Compact) Modifier
+                    else
+                        Modifier.nestedScroll(
+                            connection =
+                            TopBarNestedScrollConnection(
+                                maxOffset = spacerHeight,
+                                flingAnimationSpec = rememberSplineBasedDecay(),
+                                offset = { headerOffset },
+                                onOffsetUpdate = { headerOffset = it },
                             )
-                    )
+                        )
+                )
         ) {
             CompositionLocalProvider(LocalOverscrollFactory provides null) {
                 Column(modifier = Modifier.fillMaxWidth()) {
@@ -542,7 +542,7 @@ fun Header(modifier: Modifier = Modifier, onMenuOpen: () -> Unit = {}) {
             HeaderExpanded(modifier = modifier)
         }
         else -> {
-            HeaderCompact(modifier = modifier, onMenuOpen = onMenuOpen)
+            HeaderCompact(modifier = modifier, onMenuOpen = { })
         }
     }
 }
@@ -551,14 +551,14 @@ fun Header(modifier: Modifier = Modifier, onMenuOpen: () -> Unit = {}) {
 private fun HeaderCompact(modifier: Modifier = Modifier, onMenuOpen: () -> Unit) {
 
     Row(modifier = modifier.height(64.dp), verticalAlignment = Alignment.CenterVertically) {
-        IconButton(onClick = onMenuOpen, modifier = Modifier) {
-            Icon(
-                imageVector = Icons.Outlined.Menu,
-                contentDescription = stringResource(R.string.show_navigation_drawer),
-                modifier = Modifier,
-            )
-        }
-        Spacer(modifier = Modifier.width(4.dp))
+//        IconButton(onClick = {}, modifier = Modifier) {
+////            Icon(
+////                imageVector = Icons.Outlined.Menu,
+////                contentDescription = stringResource(R.string.show_navigation_drawer),
+////                modifier = Modifier,
+////            )
+//        }
+//        Spacer(modifier = Modifier.width(4.dp))
         Text(
             stringResource(R.string.download_queue),
             style =
@@ -711,17 +711,17 @@ fun SubHeader(
 
         Spacer(Modifier.width(4.dp))
 
-        FilledIconButton(
-            onClick = onShowMenu,
-            modifier = Modifier.clearAndSetSemantics {}.size(32.dp),
-            colors = IconButtonDefaults.filledIconButtonColors(containerColor = containerColor),
-        ) {
-            Icon(
-                imageVector = Icons.Outlined.MoreVert,
-                contentDescription = null,
-                modifier = Modifier.size(16.dp),
-            )
-        }
+//        FilledIconButton(
+//            onClick = onShowMenu,
+//            modifier = Modifier.clearAndSetSemantics {}.size(32.dp),
+//            colors = IconButtonDefaults.filledIconButtonColors(containerColor = containerColor),
+//        ) {
+//            Icon(
+//                imageVector = Icons.Outlined.MoreVert,
+//                contentDescription = null,
+//                modifier = Modifier.size(16.dp),
+//            )
+//        }
     }
 }
 

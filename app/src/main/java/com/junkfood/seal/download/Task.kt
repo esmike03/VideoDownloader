@@ -2,7 +2,6 @@ package com.junkfood.seal.download
 
 import com.junkfood.seal.database.objects.CommandTemplate
 import com.junkfood.seal.download.Task.TypeInfo
-import com.junkfood.seal.download.Task.ViewState
 import com.junkfood.seal.util.DownloadUtil
 import com.junkfood.seal.util.Format
 import com.junkfood.seal.util.VideoInfo
