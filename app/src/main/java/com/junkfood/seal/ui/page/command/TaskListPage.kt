@@ -74,7 +74,7 @@ import com.junkfood.seal.ui.component.PasteFromClipBoardButton
 import com.junkfood.seal.ui.component.SealDialog
 import com.junkfood.seal.ui.component.SealModalBottomSheetM2
 import com.junkfood.seal.ui.component.TaskStatus
-import com.junkfood.seal.ui.page.settings.command.CommandTemplateDialog
+
 import com.junkfood.seal.util.PreferenceUtil
 import com.junkfood.seal.util.PreferenceUtil.updateInt
 import com.junkfood.seal.util.TEMPLATE_ID
@@ -226,18 +226,7 @@ fun TaskListPage(onNavigateBack: () -> Unit, onNavigateToDetail: (Int) -> Unit) 
                 if (showTemplateSelectionDialog) {
                     TemplatePickerDialog() { showTemplateSelectionDialog = false }
                 }
-                if (showTemplateCreatorDialog) {
-                    CommandTemplateDialog(
-                        onDismissRequest = { showTemplateCreatorDialog = false },
-                        confirmationCallback = { scope.launch { TEMPLATE_ID.updateInt(it) } },
-                    )
-                }
-                if (showTemplateEditorDialog) {
-                    CommandTemplateDialog(
-                        commandTemplate = template,
-                        onDismissRequest = { showTemplateEditorDialog = false },
-                    )
-                }
+
             },
         )
 }

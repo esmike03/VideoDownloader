@@ -69,12 +69,7 @@ import com.junkfood.seal.ui.component.SealModalBottomSheetM2
 import com.junkfood.seal.ui.component.SingleChoiceChip
 import com.junkfood.seal.ui.component.VideoFilterChip
 import com.junkfood.seal.ui.page.command.TemplatePickerDialog
-import com.junkfood.seal.ui.page.settings.command.CommandTemplateDialog
-import com.junkfood.seal.ui.page.settings.format.AudioConversionQuickSettingsDialog
-import com.junkfood.seal.ui.page.settings.format.FormatSortingDialog
-import com.junkfood.seal.ui.page.settings.format.VideoFormatDialog
-import com.junkfood.seal.ui.page.settings.format.VideoQualityDialog
-import com.junkfood.seal.ui.page.settings.network.CookiesQuickSettingsDialog
+
 import com.junkfood.seal.util.AUDIO_CONVERSION_FORMAT
 import com.junkfood.seal.util.AUDIO_CONVERT
 import com.junkfood.seal.util.CONVERT_M4A
@@ -226,13 +221,7 @@ fun DownloadSettingDialog(
     val scope = rememberCoroutineScope()
     val context = LocalContext.current
 
-    LaunchedEffect(showCookiesDialog) {
-        withContext(Dispatchers.IO) {
-            DownloadUtil.getCookiesContentFromDatabase().getOrNull()?.let {
-                FileUtil.writeContentToFile(it, context.getCookiesFile())
-            }
-        }
-    }
+
 
     val downloadButtonCallback = {
         onDismissRequest()
@@ -547,76 +536,14 @@ fun DownloadSettingDialog(
     if (showAudioSettingsDialog) {
         //        AudioQuickSettingsDialog(onDismissRequest = { showAudioSettingsDialog = false })
     }
-    if (showVideoFormatDialog) {
-        VideoFormatDialog(
-            videoFormatPreference = videoFormatPreference,
-            onDismissRequest = { showVideoFormatDialog = false },
-            onConfirm = {
-                videoFormatPreference = it
-                VIDEO_FORMAT.updateInt(it)
-            },
-        )
-    }
-    if (showVideoQualityDialog) {
-        VideoQualityDialog(
-            videoQuality = videoQuality,
-            onDismissRequest = { showVideoQualityDialog = false },
-            onConfirm = {
-                VIDEO_QUALITY.updateInt(it)
-                videoQuality = it
-            },
-        )
-    }
+
+
 
     if (showTemplateSelectionDialog) {
         TemplatePickerDialog { showTemplateSelectionDialog = false }
     }
-    if (showTemplateCreatorDialog) {
-        CommandTemplateDialog(
-            onDismissRequest = { showTemplateCreatorDialog = false },
-            confirmationCallback = { scope.launch { TEMPLATE_ID.updateInt(it) } },
-        )
-    }
-    if (showTemplateEditorDialog) {
-        CommandTemplateDialog(
-            commandTemplate = template,
-            onDismissRequest = { showTemplateEditorDialog = false },
-        )
-    }
-    if (showCookiesDialog && cookiesProfiles.isNotEmpty()) {
-        CookiesQuickSettingsDialog(
-            onDismissRequest = { showCookiesDialog = false },
-            onConfirm = {},
-            cookieProfiles = cookiesProfiles,
-            onCookieProfileClicked = { onNavigateToCookieGeneratorPage(it.url) },
-            isCookiesEnabled = cookies,
-            onCookiesToggled = {
-                cookies = it
-                COOKIES.updateBoolean(cookies)
-            },
-        )
-    }
-    if (showAudioConversionDialog) {
-        AudioConversionQuickSettingsDialog(onDismissRequest = { showAudioConversionDialog = false })
-    }
-    if (showFormatSortingDialog) {
-        FormatSortingDialog(
-            fields = sortingFields,
-            showSwitch = true,
-            toggleableValue = formatSorting,
-            onSwitchChecked = {
-                formatSorting = it
-                FORMAT_SORTING.updateBoolean(it)
-            },
-            onImport = {
-                sortingFields =
-                    DownloadUtil.DownloadPreferences.createFromPreferences().toFormatSorter()
-            },
-            onDismissRequest = { showFormatSortingDialog = false },
-            onConfirm = {
-                sortingFields = it
-                SORTING_FIELDS.updateString(it)
-            },
-        )
-    }
+
+
+
+
 }

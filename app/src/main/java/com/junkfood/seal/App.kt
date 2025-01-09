@@ -13,14 +13,14 @@ import android.net.ConnectivityManager
 import android.net.Uri
 import android.os.Build
 import android.os.IBinder
+import android.provider.ContactsContract
 import androidx.core.content.getSystemService
 import com.google.android.material.color.DynamicColors
 import com.junkfood.seal.download.DownloaderV2
 import com.junkfood.seal.download.DownloaderV2Impl
 import com.junkfood.seal.ui.page.download.HomePageViewModel
 import com.junkfood.seal.ui.page.downloadv2.configure.DownloadDialogViewModel
-import com.junkfood.seal.ui.page.settings.directory.Directory
-import com.junkfood.seal.ui.page.settings.network.CookiesViewModel
+
 import com.junkfood.seal.ui.page.videolist.VideoListViewModel
 import com.junkfood.seal.util.AUDIO_DIRECTORY
 import com.junkfood.seal.util.COMMAND_DIRECTORY
@@ -67,7 +67,7 @@ class App : Application() {
                     single<DownloaderV2> { DownloaderV2Impl(androidContext()) }
                     viewModel { DownloadDialogViewModel(downloader = get()) }
                     viewModel { HomePageViewModel() }
-                    viewModel { CookiesViewModel() }
+
                     viewModel { VideoListViewModel() }
                 }
             )
@@ -91,9 +91,7 @@ class App : Application() {
                 YoutubeDL.init(this@App)
                 FFmpeg.init(this@App)
                 Aria2c.init(this@App)
-                DownloadUtil.getCookiesContentFromDatabase().getOrNull()?.let {
-                    FileUtil.writeContentToFile(it, getCookiesFile())
-                }
+
                 UpdateUtil.deleteOutdatedApk()
             } catch (th: Throwable) {
                 withContext(Dispatchers.Main) { startCrashReportActivity(th) }
@@ -167,34 +165,7 @@ class App : Application() {
                     absolutePath
                 }
 
-        fun updateDownloadDir(uri: Uri, directoryType: Directory) {
-            when (directoryType) {
-                Directory.AUDIO -> {
-                    val path = FileUtil.getRealPath(uri)
-                    audioDownloadDir = path
-                    PreferenceUtil.encodeString(AUDIO_DIRECTORY, path)
-                }
 
-                Directory.VIDEO -> {
-                    val path = FileUtil.getRealPath(uri)
-                    videoDownloadDir = path
-                    PreferenceUtil.encodeString(VIDEO_DIRECTORY, path)
-                }
-
-                Directory.CUSTOM_COMMAND -> {
-                    val path = FileUtil.getRealPath(uri)
-                }
-
-                Directory.SDCARD -> {
-                    context.contentResolver?.takePersistableUriPermission(
-                        uri,
-                        Intent.FLAG_GRANT_READ_URI_PERMISSION or
-                            Intent.FLAG_GRANT_WRITE_URI_PERMISSION,
-                    )
-                    PreferenceUtil.encodeString(SDCARD_URI, uri.toString())
-                }
-            }
-        }
 
         fun getVersionReport(): String {
             val versionName = packageInfo.versionName

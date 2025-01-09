@@ -91,7 +91,7 @@ import com.junkfood.seal.ui.component.TextButtonWithIcon
 import com.junkfood.seal.ui.component.VideoFilterChip
 import com.junkfood.seal.ui.page.download.VideoClipDialog
 import com.junkfood.seal.ui.page.download.VideoSelectionSlider
-import com.junkfood.seal.ui.page.settings.general.DialogCheckBoxItem
+
 import com.junkfood.seal.ui.theme.SealTheme
 import com.junkfood.seal.ui.theme.generateLabelColor
 import com.junkfood.seal.util.EXTRACT_AUDIO
@@ -919,49 +919,9 @@ private fun SubtitleSelectionDialog(
                             )
                         }
                     }
-                    for ((code, formats) in suggestedSubtitlesFiltered) {
-                        item(key = code) {
-                            DialogCheckBoxItem(
-                                modifier = Modifier.animateItem(),
-                                checked = selectedSubtitles.contains(code),
-                                onValueChange = {
-                                    if (selectedSubtitles.contains(code)) {
-                                        selectedSubtitles.remove(code)
-                                    } else {
-                                        selectedSubtitles.add(code)
-                                    }
-                                },
-                                text = formats.first().run { name ?: protocol ?: code },
-                            )
-                        }
-                    }
 
-                    if (autoCaptionsFiltered.isNotEmpty()) {
-                        item {
-                            Text(
-                                text = stringResource(id = R.string.auto_subtitle),
-                                style = MaterialTheme.typography.titleSmall,
-                                color = MaterialTheme.colorScheme.primary,
-                                modifier = Modifier.padding(horizontal = 24.dp, vertical = 12.dp),
-                            )
-                        }
-                        for ((code, formats) in autoCaptionsFiltered) {
-                            item(key = code) {
-                                DialogCheckBoxItem(
-                                    modifier = Modifier.animateItem(),
-                                    checked = selectedAutoCaptions.contains(code),
-                                    onValueChange = {
-                                        if (selectedAutoCaptions.contains(code)) {
-                                            selectedAutoCaptions.remove(code)
-                                        } else {
-                                            selectedAutoCaptions.add(code)
-                                        }
-                                    },
-                                    text = formats.first().run { name ?: protocol ?: code },
-                                )
-                            }
-                        }
-                    }
+
+
                 }
                 androidx.compose.material3.HorizontalDivider()
             }

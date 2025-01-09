@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name" translatable="false">YT Downloader</string>
+    <string name="app_name" translatable="false">Video Downloadedr</string>
     <string name="video_directory">Video folder</string>
     <string name="extract_audio">Save as audio</string>
     <string name="create_thumbnail">Save thumbnail</string>
@@ -133,7 +133,7 @@
     <string name="permission_issue_desc">Directories outside Download/ and Documents/ are not supported</string>
     <string name="battery_configuration">Battery configuration</string>
     <string name="battery_configuration_desc">Ignore battery optimization for this app to download in the background</string>
-    <string name="service_title">Youtube is downloading…</string>
+    <string name="service_title">Video is downloading…</string>
     <string name="unknown_error">Unknown error</string>
     <string name="translate">Translate</string>
     <string name="translate_desc">Help translate this app on Hosted Weblate</string>
@@ -206,7 +206,7 @@
     <string name="high_contrast">High contrast dark theme</string>
     <string name="invalid_input">Invalid input</string>
     <string name="lowest_quality">Lowest quality</string>
-    <string name="download_queue">Youtube Downloads</string>
+    <string name="download_queue">Video Link Downloads</string>
     <string name="unavailable">Unavailable</string>
     <string name="format_settings_desc">File format, video quality, subtitles</string>
     <string name="general_settings_desc">Yt-dlp version, notification, playlist</string>
@@ -224,7 +224,7 @@
     <string name="selected_item_count">%1$d selected</string>
     <string name="video_only">Video (no audio)</string>
     <string name="suggested">Suggested</string>
-    <string name="format_selection">Format selection</string>
+    <string name="format_selection">Video Download Selection</string>
     <string name="format_selection_desc">Select the format to download before starting the download</string>
     <string name="generate_new_cookies">Generate new cookies</string>
     <string name="use_cookies">Use Cookies</string>
@@ -239,7 +239,7 @@
     <string name="auto_subtitle">Automatic captions</string>
     <string name="auto_subtitle_desc">Download auto-generated captions</string>
     <string name="title_activity_share">Quick download</string>
-    <string name="abs_hint">Youtube Downloader</string>
+    <string name="abs_hint">Video Link Downloader</string>
     <string name="video_title_sample_text">Video title sample text</string>
     <string name="video_creator_sample_text">Video creator sample text</string>
     <string name="subtitle">Subtitle</string>
@@ -315,7 +315,7 @@
     <string name="unknown_error_title">Oops! Something went wrong</string>
     <string name="copy_and_exit">Copy and exit</string>
     <string name="expand">Expand</string>
-    <string name="new_task">New download task</string>
+    <string name="new_task">Paste your video links</string>
     <string name="start">Start</string>
     <string name="edit_template">Edit \"%1$s\"</string>
     <string name="proxy">Proxy</string>

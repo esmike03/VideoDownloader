@@ -16,6 +16,6 @@ dependencyResolutionManagement {
         mavenLocal()
     }
 }
-rootProject.name = "YT Downloader"
+rootProject.name = "Video Downloader"
 include (":app")
 include(":color")

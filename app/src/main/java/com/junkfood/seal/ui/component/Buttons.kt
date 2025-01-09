@@ -36,7 +36,7 @@ import androidx.compose.ui.platform.LocalUriHandler
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.junkfood.seal.R
-import com.junkfood.seal.ui.page.settings.general.ytdlpReference
+
 
 @Composable
 fun OutlinedButtonWithIcon(
@@ -153,7 +153,7 @@ fun LinkButton(
     modifier: Modifier = Modifier,
     text: String = stringResource(R.string.yt_dlp_docs),
     icon: ImageVector = Icons.Outlined.OpenInNew,
-    link: String = ytdlpReference,
+    link: String = "",
 ) {
     val uriHandler = LocalUriHandler.current
     TextButtonWithIcon(

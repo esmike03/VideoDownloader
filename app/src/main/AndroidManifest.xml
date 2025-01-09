@@ -34,7 +34,7 @@
         android:enableOnBackInvokedCallback="true"
         android:extractNativeLibs="true"
         android:icon="@drawable/download"
-        android:label="YT Downloader"
+        android:label="Video Downloader"
         android:requestLegacyExternalStorage="true"
         android:roundIcon="@drawable/download"
         android:supportsRtl="true"

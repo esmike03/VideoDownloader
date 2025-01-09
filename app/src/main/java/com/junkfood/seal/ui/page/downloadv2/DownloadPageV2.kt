@@ -73,6 +73,7 @@ import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.platform.LocalLayoutDirection
 import androidx.compose.ui.platform.LocalUriHandler
 import androidx.compose.ui.platform.LocalView
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.pluralStringResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.semantics.clearAndSetSemantics
@@ -125,7 +126,7 @@ import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import org.koin.compose.koinInject
 
-private const val TAG = "DownloadPageV2"
+private const val TAG = "DownloadPageV2Test"
 
 enum class Filter {
     All,
@@ -133,15 +134,7 @@ enum class Filter {
     Canceled,
     Finished;
 
-    @Composable
-    @ReadOnlyComposable
-    fun label(): String =
-        when (this) {
-            All -> stringResource(R.string.all)
-            Downloading -> stringResource(R.string.status_downloading)
-            Canceled -> stringResource(R.string.status_canceled)
-            Finished -> stringResource(R.string.status_completed)
-        }
+
 
     fun predict(entry: Pair<Task, Task.State>): Boolean {
         if (this == All) return true
@@ -382,42 +375,7 @@ fun DownloadPageImplV2(
         ) {
             CompositionLocalProvider(LocalOverscrollFactory provides null) {
                 Column(modifier = Modifier.fillMaxWidth()) {
-                    Spacer(Modifier.height(with(LocalDensity.current) { headerOffset.toDp() }))
-                    Header(onMenuOpen = onMenuOpen, modifier = Modifier.padding(horizontal = 16.dp))
-                    SelectionGroupRow(
-                        modifier =
-                            Modifier.horizontalScroll(rememberScrollState())
-                                .padding(horizontal = 20.dp)
-                    ) {
-                        Filter.entries.forEach { filter ->
-                            SelectionGroupItem(
-                                colors =
-                                    SelectionGroupDefaults.colors(
-                                        activeContainerColor =
-                                            LocalFixedColorRoles.current.tertiaryFixed,
-                                        activeContentColor =
-                                            LocalFixedColorRoles.current.onTertiaryFixed,
-                                    ),
-                                selected = activeFilter == filter,
-                                onClick = {
-                                    if (activeFilter == filter) {
-                                        scope.launch { lazyListState.animateScrollToItem(0) }
-                                        scope.launch {
-                                            val initialValue = headerOffset
-                                            AnimationState(initialValue = initialValue).animateTo(
-                                                spacerHeight
-                                            ) {
-                                                headerOffset = value
-                                            }
-                                        }
-                                    } else {
-                                        activeFilter = filter
-                                    }
-                                },
-                            ) {
-                                Text(filter.label())
-                            }
-                        }
+
                     }
                     Spacer(Modifier.height(8.dp))
                     if (headerOffset <= 0.1f && spacerHeight > 0f) {
@@ -511,28 +469,7 @@ fun DownloadPageImplV2(
             }
         }
     }
-    if (selectedTask != null) {
-        val task = selectedTask!!
-        val (downloadState, _, viewState) = taskDownloadStateMap[task] ?: return
-        SealModalBottomSheet(
-            sheetState = sheetState,
-            contentPadding = PaddingValues(),
-            onDismissRequest = {
-                scope.launch { sheetState.hide() }.invokeOnCompletion { selectedTask = null }
-            },
-        ) {
-            SheetContent(
-                task = task,
-                downloadState = downloadState,
-                viewState = viewState,
-                onDismissRequest = {
-                    scope.launch { sheetState.hide() }.invokeOnCompletion { selectedTask = null }
-                },
-                onActionPost = onActionPost,
-            )
-        }
-    }
-}
+
 
 @Composable
 fun Header(modifier: Modifier = Modifier, onMenuOpen: () -> Unit = {}) {
@@ -575,7 +512,7 @@ private fun HeaderExpanded(modifier: Modifier = Modifier) {
     Row(modifier = modifier.height(64.dp), verticalAlignment = Alignment.CenterVertically) {
         Spacer(modifier = Modifier.width(4.dp))
         Text(
-            stringResource(R.string.download_queue),
+            "Video Link Downloader",
             style = MaterialTheme.typography.headlineSmall.copy(fontWeight = FontWeight.Medium),
         )
     }
@@ -622,17 +559,21 @@ private fun DownloadQueuePlaceholder(modifier: Modifier = Modifier) {
                 }
             if (showImage) {
                 Image(
-                    painter = rememberVectorPainter(image = DynamicColorImageVectors.download()),
+                    painter = painterResource(id = R.drawable.download), // Replace with your image resource name
                     contentDescription = null,
-                    modifier =
-                        Modifier.fillMaxHeight(0.5f).widthIn(max = 240.dp).constrainAs(image) {
+                    modifier = Modifier
+                        .fillMaxHeight(0.5f)
+                        .widthIn(max = 240.dp)
+                        .constrainAs(image) {
                             top.linkTo(parent.top)
                             bottom.linkTo(parent.bottom)
                             start.linkTo(parent.start)
                             end.linkTo(parent.end)
-                        },
+                        }
                 )
-            } else {
+            }
+
+            else {
                 Spacer(Modifier.height(72.dp).constrainAs(image) { top.linkTo(parent.top) })
             }
             Column(
@@ -640,13 +581,13 @@ private fun DownloadQueuePlaceholder(modifier: Modifier = Modifier) {
                 horizontalAlignment = Alignment.CenterHorizontally,
             ) {
                 Text(
-                    text = stringResource(R.string.you_ll_find_your_downloads_here),
+                    text = "Just paste any video link Facebook, Instagram, Youtube, and Movie Links",
                     modifier = Modifier.padding(horizontal = 24.dp),
                     style = MaterialTheme.typography.titleMedium,
                     color = MaterialTheme.colorScheme.onSurface,
                 )
                 Text(
-                    text = stringResource(R.string.download_hint),
+                    text = "",
                     modifier = Modifier.padding(top = 4.dp).padding(horizontal = 24.dp),
                     style = MaterialTheme.typography.bodyMedium,
                     color = MaterialTheme.colorScheme.onSurfaceVariant,

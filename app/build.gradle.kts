@@ -44,7 +44,7 @@ android {
     buildFeatures { buildConfig = true }
 
     defaultConfig {
-        applicationId = "com.junkfood.seal"
+        applicationId = "com.junkfood.video"
         minSdk = 24
         targetSdk = 35
         versionCode = 200_000_150
@@ -139,7 +139,7 @@ android {
     applicationVariants.all {
         outputs.all {
             (this as com.android.build.gradle.internal.api.BaseVariantOutputImpl).outputFileName =
-                "YTDL-${name}.apk"
+                "VideoDownloader-${name}.apk"
         }
     }
 

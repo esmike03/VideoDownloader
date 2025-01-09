@@ -111,10 +111,7 @@ import com.junkfood.seal.ui.page.downloadv2.configure.DownloadDialogViewModel.Sh
 import com.junkfood.seal.ui.page.downloadv2.configure.DownloadDialogViewModel.SheetState.Error
 import com.junkfood.seal.ui.page.downloadv2.configure.DownloadDialogViewModel.SheetState.InputUrl
 import com.junkfood.seal.ui.page.downloadv2.configure.DownloadDialogViewModel.SheetState.Loading
-import com.junkfood.seal.ui.page.settings.command.CommandTemplateDialog
-import com.junkfood.seal.ui.page.settings.format.AudioQuickSettingsDialog
-import com.junkfood.seal.ui.page.settings.format.VideoQuickSettingsDialog
-import com.junkfood.seal.ui.page.settings.network.CookiesQuickSettingsDialog
+
 import com.junkfood.seal.ui.theme.SealTheme
 import com.junkfood.seal.util.AUDIO_CONVERSION_FORMAT
 import com.junkfood.seal.util.AUDIO_CONVERT
@@ -227,18 +224,7 @@ fun DownloadDialog(
         var res by remember(preferences) { mutableIntStateOf(preferences.videoResolution) }
         var format by remember(preferences) { mutableIntStateOf(preferences.videoFormat) }
 
-        VideoQuickSettingsDialog(
-            videoResolution = res,
-            videoFormatPreference = format,
-            onResolutionSelect = { res = it },
-            onFormatSelect = { format = it },
-            onDismissRequest = { showVideoPresetDialog = false },
-            onSave = {
-                VIDEO_FORMAT.updateInt(format)
-                VIDEO_QUALITY.updateInt(res)
-                onPreferencesUpdate(DownloadUtil.DownloadPreferences.createFromPreferences())
-            },
-        )
+
     }
 
     if (showAudioPresetDialog) {
@@ -250,29 +236,6 @@ fun DownloadDialog(
         var convertAudio by remember(preferences) { mutableStateOf(preferences.convertAudio) }
         var preferredFormat by remember(preferences) { mutableIntStateOf(preferences.audioFormat) }
 
-        AudioQuickSettingsDialog(
-            modifier = Modifier,
-            preferences = preferences,
-            audioQuality = quality,
-            onQualitySelect = { quality = it },
-            useCustomAudioPreset = customPreset,
-            onCustomPresetToggle = { customPreset = it },
-            convertAudio = convertAudio,
-            onConvertToggled = { convertAudio = it },
-            conversionFormat = conversionFmt,
-            onConversionSelect = { conversionFmt = it },
-            preferredFormat = preferredFormat,
-            onPreferredSelect = { preferredFormat = it },
-            onDismissRequest = { showAudioPresetDialog = false },
-            onSave = {
-                AUDIO_QUALITY.updateInt(quality)
-                USE_CUSTOM_AUDIO_PRESET.updateBoolean(customPreset)
-                AUDIO_CONVERSION_FORMAT.updateInt(conversionFmt)
-                AUDIO_CONVERT.updateBoolean(convertAudio)
-                AUDIO_FORMAT.updateInt(preferredFormat)
-                onPreferencesUpdate(DownloadUtil.DownloadPreferences.createFromPreferences())
-            },
-        )
     }
 }
 
@@ -579,18 +542,7 @@ private fun ConfigurePage(
                     if (showTemplateSelectionDialog) {
                         TemplatePickerDialog { showTemplateSelectionDialog = false }
                     }
-                    if (showTemplateCreatorDialog) {
-                        CommandTemplateDialog(
-                            onDismissRequest = { showTemplateCreatorDialog = false },
-                            confirmationCallback = { scope.launch { TEMPLATE_ID.updateInt(it) } },
-                        )
-                    }
-                    if (showTemplateEditorDialog) {
-                        CommandTemplateDialog(
-                            commandTemplate = template,
-                            onDismissRequest = { showTemplateEditorDialog = false },
-                        )
-                    }
+
                     DrawerSheetSubtitle(
                         text = stringResource(id = R.string.template_selection),
                         modifier = Modifier,
@@ -796,19 +748,7 @@ private fun AdditionalSettings(
             )
         }
 
-        if (showCookiesDialog && cookiesProfiles.isNotEmpty()) {
-            CookiesQuickSettingsDialog(
-                onDismissRequest = { showCookiesDialog = false },
-                onConfirm = {},
-                cookieProfiles = cookiesProfiles,
-                onCookieProfileClicked = { onNavigateToCookieGeneratorPage(it.url) },
-                isCookiesEnabled = cookies,
-                onCookiesToggled = {
-                    COOKIES.updateBoolean(!cookies)
-                    onPreferenceUpdate()
-                },
-            )
-        }
+
     }
 }
 

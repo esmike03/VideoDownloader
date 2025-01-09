@@ -128,42 +128,43 @@ class QuickDownloadActivity : ComponentActivity() {
                                     }
                                 }
                         }
-                    }
-
-                    if (showDialog) {
-                        DownloadDialog(
-                            state = state,
-                            sheetState = sheetState,
-                            config = Config(),
-                            preferences = preferences,
-                            onPreferencesUpdate = { preferences = it },
-                            onActionPost = { viewModel.postAction(it) },
-                        )
-                    }
-
-                    when (selectionState) {
-                        is SelectionState.FormatSelection ->
-                            FormatPage(
-                                state = selectionState,
-                                onDismissRequest = {
-                                    viewModel.postAction(Action.Reset)
-                                    this.finish()
-                                },
-                            )
-
-                        SelectionState.Idle -> {}
-                        is SelectionState.PlaylistSelection -> {
-                            PlaylistSelectionPage(
-                                state = selectionState,
-                                onDismissRequest = {
-                                    viewModel.postAction(Action.Reset)
-                                    this.finish()
-                                },
-                            )
                         }
                     }
+
+//                    if (showDialog) {
+//                        DownloadDialog(
+//                            state = state,
+//                            sheetState = sheetState,
+//                            config = Config(),
+//                            preferences = preferences,
+//                            onPreferencesUpdate = { preferences = it },
+//                            onActionPost = { viewModel.postAction(it) },
+//                        )
+//                    }
+
+//                    when (selectionState) {
+//                        is SelectionState.FormatSelection ->
+//                            FormatPage(
+//                                state = selectionState,
+//                                onDismissRequest = {
+//                                    viewModel.postAction(Action.Reset)
+//                                    this.finish()
+//                                },
+//                            )
+//
+//                        SelectionState.Idle -> {}
+//                        is SelectionState.PlaylistSelection -> {
+//                            PlaylistSelectionPage(
+//                                state = selectionState,
+//                                onDismissRequest = {
+//                                    viewModel.postAction(Action.Reset)
+//                                    this.finish()
+//                                },
+//                            )
+//                        }
+//                    }
                 }
             }
         }
-    }
+
 }
